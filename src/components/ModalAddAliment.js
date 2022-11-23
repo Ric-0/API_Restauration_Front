@@ -7,19 +7,15 @@ const ModalAddAliment = (props) => {
     const { register, handleSubmit } = useForm();
     const [data, setData] = React.useState(null);
 
-    // if(data !== null){
-    //     valider(data)
-    // }
-
-    function validerForm(data){
-        console.log(data);
-        setData(JSON.stringify(data))
+    if(data !== null){
         valider()
     }
 
+    function validerForm(data){
+        setData(JSON.stringify(data))
+    }
+
     async function valider(){
-        console.log(data);
-        console.log(JSON.parse(data));
         await axios('aliments', {
             method: 'post',
             baseURL: props.baseURL,
@@ -30,6 +26,7 @@ const ModalAddAliment = (props) => {
         })
         await props.returnValue()
         props.setIsOpenAliment(false)
+        setData(null)
     }
     return (
         <>

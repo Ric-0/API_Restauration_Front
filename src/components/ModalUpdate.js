@@ -13,17 +13,16 @@ const ModalUpdate = (props) => {
     }
 
     async function valider(){
-        console.log(data);
-        // await axios('plats', {
-        //     method: 'post',
-        //     baseURL: props.baseURL,
-        //     data: JSON.parse(data),
-            // headers: {
-            //     'token': accessToken
-            // }
-        // })
+        await axios('plats', {
+            method: 'post',
+            baseURL: props.baseURL,
+            data: JSON.parse(data),
+            headers: {
+                'token': props.accessToken
+            }
+        })
         await props.returnValue()
-        // props.setIsOpenUpdate(null)
+        props.setIsOpenUpdate(null)
     }
     return (
         <>
@@ -61,6 +60,8 @@ const ModalUpdate = (props) => {
                                     {/* <input {...register("aliments"+count+".quantite")} value={aliment.quantite} type="number" />
                                     <input {...register("aliments.nom")} value={aliment.nom} />
                                     <input {...register("aliments.quantite")} value={aliment.quantite} /> */}
+                                <br/>
+                                <label>Prix</label>
                                 <input type="number" {...register("prix")} placeholder="Prix" value={plat.prix} />
                                 <p>{data}</p>
                                 <input type="submit" />

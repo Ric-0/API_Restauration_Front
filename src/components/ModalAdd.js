@@ -8,17 +8,14 @@ const ModalAdd = (props) => {
     const [data, setData] = React.useState(null);
 
     if(data !== null){
-        console.log(data)
-    }
-
-    async function validerFormPlat(dataForm){
-        console.log(dataForm);
-        setData(JSON.stringify(dataForm))
         valider()
     }
 
+    async function validerFormPlat(dataForm){
+        setData(JSON.stringify(dataForm))
+    }
+
     async function valider(){
-        console.log(data);
         await axios('plats', {
             method: 'post',
             baseURL: props.baseURL,
@@ -29,6 +26,7 @@ const ModalAdd = (props) => {
         })
         await props.returnValue()
         props.setIsOpen(false)
+        setData(null)
     }
     return (
         <>

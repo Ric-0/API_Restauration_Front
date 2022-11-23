@@ -70,6 +70,30 @@ export default function App() {
         await returnValue()
     }
 
+    async function deleteAliment(id){ 
+        await axios('aliments/'+id, {
+            method: 'delete',
+            baseURL: baseURL,
+            headers: {
+                'token': accessToken
+            }
+        })
+        await returnValue()
+    }
+
+    async function updateAliment(id,nom, type, quantite){
+        let data = {nom: nom, type: type, quantite:quantite}
+        await axios('aliments/'+id, {
+            method: 'put',
+            baseURL: baseURL,
+            data: data,
+            headers: {
+                'token': accessToken
+            }
+        })
+        await returnValue()
+    }
+
     let dispo = true
     
   
@@ -84,9 +108,20 @@ export default function App() {
             </button>
             {isOpenAliment && <ModalAddAliment setIsOpenAliment={setIsOpenAliment} baseURL={baseURL} accessToken={accessToken} returnValue={returnValue} />}
             {isOpenUpdate && <ModalUpdate setIsOpenUpdate={setIsOpenUpdate} isOpenUpdate={isOpenUpdate} plats={plats} aliments={aliments} baseURL={baseURL} accessToken={accessToken} returnValue={returnValue} />}
-            <div class='global'>
+            <br/>
+            <a href="#plats">
+                Plats
+            </a>
+            <br/>
+            <a href="#aliments">
+                Aliments
+            </a>
+            <h1>
+                Plats
+            </h1>
+            <div class='global' id="plats">
                 {plats.map((plat) => (
-                    <div class='plat'>
+                    <div class='case'>
                         <button onClick={() => deletePlat(plat._id)}>
                             Supprimer
                         </button>
@@ -116,6 +151,21 @@ export default function App() {
                         {dispo = true}
                     </div>
                 ))}
+            </div>
+            <h1>
+                Aliments
+            </h1>
+            <div class="global" id="aliments">
+                {aliments.map((aliment) => {
+                    return <div class="case">
+                            <button onClick={() => deleteAliment(aliment._id)}>
+                                Supprimer
+                            </button>
+                            <h1>{aliment.nom}</h1>
+                            <h2>{aliment.type}</h2>
+                            <p><button onClick={() => updateAliment(aliment._id,aliment.nom,aliment.type,aliment.quantite -1)}>-</button> {aliment.quantite} <button onClick={() => updateAliment(aliment._id,aliment.nom,aliment.type,aliment.quantite +1)}>+</button></p>
+                        </div>
+                })}
             </div>
         </div>
     );
